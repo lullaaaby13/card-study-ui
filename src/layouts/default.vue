@@ -7,9 +7,16 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
-import EssentialLink, {EssentialLinkProps} from 'components/EssentialLink.vue';
 
-const leftDrawerOpen = ref(false)
+import {onMounted} from "vue";
+import {useCardSetStore} from "stores/card-set-store";
+import {useRoute} from "vue-router";
+
+let cardSetStore = useCardSetStore();
+let route = useRoute();
+
+onMounted(() => {
+
+});
 
 </script>
