@@ -4,7 +4,7 @@
     <div class="row justify-center">
       <div class="col-8">
         <div class="flex justify-end q-my-md">
-          <q-btn label="카드 세트 만들기" color="green"/>
+          <q-btn label="카드 세트 만들기" color="green" to="card-register"/>
         </div>
         <div class="row q-gutter-md justify-center">
           <q-card class="col-md-4 q-pa-lg" v-for="index in 12" :key="index">
