@@ -23,9 +23,10 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
           script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             cd ${{ secrets.DEPLOY_PATH }}
             cd ui
             yarn install
             yarn build
-            cd ${{ secrets.DEPLOY_PATH }}
-            PORT=${{ secrets.DEPLOY_PATH }} nohup node ./server/dist/main.js  > /dev/null 2>&1 &
+            nohup quasar serve -p ${{ secrets.APP_SERVE_PORT }} > /dev/null 2>&1 &
