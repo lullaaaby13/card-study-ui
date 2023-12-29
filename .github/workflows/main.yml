@@ -29,4 +29,4 @@ jobs:
             git pull
             yarn install
             yarn build
-            nohup quasar serve -p ${{ secrets.APP_SERVE_PORT }} > /dev/null 2>&1 &
+            nohup quasar serve dist/spa -p ${{ secrets.APP_SERVE_PORT }} > ./app.log 2> ./error.log &
