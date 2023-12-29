@@ -26,7 +26,7 @@ jobs:
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             cd ${{ secrets.DEPLOY_PATH }}
-            cd ui
+            git pull
             yarn install
             yarn build
             nohup quasar serve -p ${{ secrets.APP_SERVE_PORT }} > /dev/null 2>&1 &
