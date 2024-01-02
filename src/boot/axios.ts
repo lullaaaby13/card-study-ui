@@ -17,7 +17,16 @@ declare module '@vue/runtime-core' {
 let url = process.env.DEV ? process.env.DEV_API : process.env.PROD_API;
 console.log('isDevelopment: ', process.env.DEV);
 console.log('API URL: ', url);
-const api = axios.create({ baseURL: url });
+const api = axios.create({
+  baseURL: url,
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': '*',
+    'Accept': '*',
+  },
+  withCredentials: true,
+});
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

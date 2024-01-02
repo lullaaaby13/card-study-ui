@@ -22,8 +22,6 @@ import {useCardSetStore} from "stores/card-set-store";
 import {useRoute} from "vue-router";
 import {AxiosError} from "axios";
 
-let cardSetStore = useCardSetStore();
-let route = useRoute();
 
 const showErrorDialog = ref(false);
 const errorMessage = ref('');
