@@ -60,4 +60,5 @@ const onCardSetCreateButtonClick = async () => {
 meta:
   title: Home
   layout: default
+  requiresAuth: true
 </route>

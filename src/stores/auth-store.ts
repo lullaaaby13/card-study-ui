@@ -1,33 +1,36 @@
-import { defineStore } from 'pinia';
-import {ref} from "vue";
+import {defineStore} from 'pinia';
+import {computed, ref} from "vue";
 import {Member} from "src/types/member";
-import {updateAuthorisationHeader} from "src/api";
+import {clearAuthorizationHeader} from "src/api";
 import AuthApi from "src/api/auth";
+import {Cookies} from "quasar";
+import MemberApi from "src/api/member";
 
 export const useAuthStore = defineStore('authStore', () => {
 
-  const accessToken = ref<string | null>(null);
-  const refreshToken = ref<string | null>(null);
   const currentMember = ref<Member | null>(null);
 
-
   const signIn = async ({ account, password }: { account: string, password: string }) => {
-    let response = await AuthApi.signIn({ account, password });
-    accessToken.value = response.accessToken;
-    refreshToken.value = response.refreshToken;
-    updateAuthorisationHeader(accessToken.value);
+    let { accessToken, refreshToken} = await AuthApi.signIn({ account, password });
+    Cookies.set('accessToken', accessToken);
+    Cookies.set('refreshToken', refreshToken);
+    currentMember.value = await MemberApi.currentMember();
   }
 
-  const logout = () => {
-    accessToken.value = null;
+
+  const signOut = () => {
+    clearAuthorizationHeader();
+    Cookies.remove('accessToken');
+    Cookies.remove('refreshToken');
     currentMember.value = null;
-    updateAuthorisationHeader(accessToken.value);
   }
+
+  const isSignedIn = computed(() => !!currentMember.value);
 
   return  {
-    accessToken,
     currentMember,
     signIn,
-    logout,
+    signOut,
+    isSignedIn,
   }
 });

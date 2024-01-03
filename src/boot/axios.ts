@@ -1,5 +1,7 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
+import {clearAuthorizationHeader} from "src/api";
+import {Cookies} from "quasar";
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -27,6 +29,28 @@ const api = axios.create({
   },
   withCredentials: true,
 });
+
+api.interceptors.request.use((config) => {
+  let accessToken = Cookies.get('accessToken');
+  console.log('api.interceptors.request.use accessToken: ', accessToken);
+  if (accessToken) {
+    config.headers['Authorization'] = `Bearer ${Cookies.get('accessToken')}`;
+  }
+  return config;
+});
+
+api.interceptors.response.use((response) => {
+  return response;
+}, error =>  {
+
+  if (error.response?.status === 401 || error.response?.status === 403) {
+    clearAuthorizationHeader()
+    Cookies.remove('accessToken');
+  }
+  return Promise.reject(error);
+});
+
+
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

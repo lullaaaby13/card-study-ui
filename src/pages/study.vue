@@ -105,4 +105,5 @@ const setCurrentCard = (card: Card) => {
 meta:
   title: Study
   layout: default
+  requireAuth: true
 </route>

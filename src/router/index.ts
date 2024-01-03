@@ -7,6 +7,8 @@ import {
 } from 'vue-router/auto';
 // @ts-ignore
 import {setupLayouts} from "virtual:generated-layouts";
+import {Cookies} from "quasar";
+import {useAuthStore} from "stores/auth-store";
 
 
 /*
@@ -30,7 +32,29 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
-    extendRoutes: routes => setupLayouts(routes)
+    extendRoutes: routes => setupLayouts(routes),
+  });
+
+  Router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      if (!Cookies.get('accessToken')) {
+        next({
+          path: '/sign-in',
+          params: { nextUrl: to.fullPath },
+        });
+      } else {
+        next();
+      }
+    } else if (to.matched.some(record => record.meta.guest)) {
+      if (localStorage.getItem('token') == null) {
+        next();
+      } else {
+        next({ name: 'Home' });
+      }
+    } else {
+      next();
+    }
+
   });
 
   return Router;

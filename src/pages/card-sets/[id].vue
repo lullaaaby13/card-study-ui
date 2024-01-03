@@ -190,4 +190,5 @@ const loadStudyCards = (optionValue: string) => {
 meta:
   title: CardSetDetails
   layout: default
+  requireAuth: true
 </route>

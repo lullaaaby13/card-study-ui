@@ -100,7 +100,7 @@
 
 <script setup lang="ts">
 import {onUnmounted, ref} from "vue";
-import {createMember} from "src/api/member";
+import MemberApi, {createMember} from "src/api/member";
 import {useRouter} from "vue-router";
 
 let router = useRouter();
@@ -116,7 +116,7 @@ const onSignUpButtonClick = async () => {
     throw new Error('비밀번호가 일치하지 않습니다.');
   }
 
-  await createMember({
+  await MemberApi.createMember({
     account: account.value,
     password: password.value,
     nickname: nickname.value,
@@ -144,4 +144,5 @@ onUnmounted(() => {
 meta:
   title: SignUp
   layout: default
+  guest: true
 </route>

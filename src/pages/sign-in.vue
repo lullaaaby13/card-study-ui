@@ -79,6 +79,7 @@ const onSignUpClick = () => {
 
 <route lang="yaml">
 meta:
-  title: Home
+  title: SignIn
   layout: default
+  guest: true
 </route>
