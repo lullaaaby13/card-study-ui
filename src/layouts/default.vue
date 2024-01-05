@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-grey-2">
-    <q-header elevated class="bg-grey-5">
+    <q-header elevated class="bg-primary">
       <q-toolbar class="flex justify-end">
 <!--        <q-btn flat round dense icon="menu" class="q-mr-sm" />-->
 <!--        <q-avatar>-->
@@ -8,7 +8,7 @@
 <!--        </q-avatar>-->
 <!--        <q-toolbar-title>Quasar Framework</q-toolbar-title>-->
 
-        <q-btn label="로그인" color="primary" v-if="!authStore.isSignedIn"/>
+        <q-btn label="로그인" color="primary" v-if="!authStore.isSignedIn" to="/sign-in"/>
 
         <q-btn-dropdown
           v-if="authStore.isSignedIn"

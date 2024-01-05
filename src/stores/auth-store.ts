@@ -12,8 +12,8 @@ export const useAuthStore = defineStore('authStore', () => {
 
   const signIn = async ({ account, password }: { account: string, password: string }) => {
     let { accessToken, refreshToken} = await AuthApi.signIn({ account, password });
-    Cookies.set('accessToken', accessToken);
-    Cookies.set('refreshToken', refreshToken);
+    Cookies.set('accessToken', accessToken, { expires: '1h' });
+    Cookies.set('refreshToken', refreshToken, { expires: '14d' });
     currentMember.value = await MemberApi.currentMember();
   }
 

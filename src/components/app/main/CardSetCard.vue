@@ -2,6 +2,7 @@
   <q-card class="col-md-4 q-pa-lg">
     <div class="row">
       <div class="col-10">
+
         <div v-if="!toggleName" class="text-h6" @click="onNameClick">
           {{ cardSet.name }}
         </div>
@@ -32,6 +33,12 @@
       <div class="col-2">
         <q-btn icon="delete" color="red-7" flat size="md" @click="onDeleteButtonClick(cardSet.id)"/>
       </div>
+    </div>
+    <div>
+      <q-badge
+        rounded
+        label="단어형"
+      />
     </div>
     <q-separator class="q-my-md"/>
 

@@ -55,3 +55,20 @@ export const emptyCard: Card = {
   createdAt: '',
   updatedAt: '',
 }
+
+export interface ChoiceTypeCard {
+  id: number;
+  question: string;
+  choices: Choice[];
+  answer: string;
+  memorizationLevel: MemorizationLevelKey;
+  nextReviewDate: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Choice {
+  order: number;
+  value: string;
+  isCorrect: boolean;
+}

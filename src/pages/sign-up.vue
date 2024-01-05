@@ -100,7 +100,7 @@
 
 <script setup lang="ts">
 import {onUnmounted, ref} from "vue";
-import MemberApi, {createMember} from "src/api/member";
+import MemberApi from "src/api/member";
 import {useRouter} from "vue-router";
 
 let router = useRouter();
@@ -123,7 +123,7 @@ const onSignUpButtonClick = async () => {
     email: email.value,
   });
 
-  router.push('/login');
+  router.push('/sign-in');
 }
 
 const validateEmail = (email: string) => {

@@ -29,18 +29,16 @@
           </div>
         </div>
 
-        <q-separator class="q-my-md"/>
 
-        <q-card class="q-pa-md">
-          <q-tabs align="left" v-model="tab">
-            <q-tab name="manual" label="직접 입력"/>
-            <q-tab name="file" label="파일"/>
-          </q-tabs>
-          <q-tab-panels v-model="tab" animated>
-            <ManualRegisterTabPanel name="manual" :card-set-id="cardSet.id"/>
-            <FileRegisterTabPanel name="file" :card-set-id="cardSet.id" @load-study-cards="loadStudyCards"/>
-          </q-tab-panels>
-        </q-card>
+        <div class="q-mt-md">
+<!--          <WordTypeCardCreationPanel-->
+<!--            :card-set="cardSet"-->
+<!--          />-->
+              <ChoiceTypePanel
+                :card-set="cardSet"
+              />
+        </div>
+
 
 <!--        <q-separator class="q-my-md"/>-->
 
@@ -65,13 +63,14 @@ import {useCardSetStore} from "stores/card-set-store";
 import CardSet from "src/types/card-set";
 import {useRoute, useRouter} from "vue-router";
 import {useCardStore} from "stores/card-store";
-import {Card, MemorizationLevel, MemorizationLevelKey} from "src/types/card";
+import {Card, MemorizationLevel} from "src/types/card";
 import MemorizationSummary from "components/app/card-sets/MemorizationSummary.vue";
-import ManualRegisterTabPanel from "components/app/card-sets/ManualRegisterTabPanel.vue";
+import ManualRegisterTabPanel from "components/app/card-sets/word-type/WordTypeManualRegisterTabPanel.vue";
 import FileRegisterTabPanel from "components/app/card-sets/FileRegisterTabPanel.vue";
-import RegisteredCard from "components/app/card-sets/RegisteredCard.vue";
-import {date} from "quasar";
+import RegisteredCard from "components/app/card-sets/word-type/WordTypeCard.vue";
 import {useStudyCardStore} from "stores/study-card-store";
+import WordTypeCardCreationPanel from "components/app/card-sets/word-type/WordTypePanel.vue";
+import ChoiceTypePanel from "components/app/card-sets/choid-type/ChoiceTypePanel.vue";
 
 let cardStore = useCardStore();
 let cardSetStore = useCardSetStore();
@@ -82,7 +81,8 @@ const cardSet = ref<CardSet>({
   id: -1,
   name: '',
   description: '',
-  lastReviewedAt: '',
+  totalCardCount: 0,
+  toStudyCardCount: 0,
   createdAt: '',
   updatedAt: '',
 });
@@ -182,6 +182,8 @@ const loadStudyCards = (optionValue: string) => {
     studyCardStore.load(cards.filter(card => card.memorizationLevel === optionValue));
   }
 }
+
+
 
 
 </script>

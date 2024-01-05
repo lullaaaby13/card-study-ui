@@ -12,3 +12,7 @@ export function clearAuthorizationHeader() {
   api.defaults.headers['Authorization'] = null;
   console.log('clearAuthorizationHeader', api.defaults.headers)
 }
+
+export function requestTemplate() {
+
+}

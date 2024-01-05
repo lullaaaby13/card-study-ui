@@ -30,17 +30,6 @@
             @keydown="handleKeyDown"
           />
         </div>
-<!--        <div class="col-12 q-pa-md">-->
-<!--          <q-input-->
-<!--            ref="referenceField"-->
-<!--            v-model="reference"-->
-<!--            type="text"-->
-<!--            outlined-->
-<!--            stack-label-->
-<!--            label="레퍼런스"-->
-<!--            @keydown="handleKeyDown"-->
-<!--          />-->
-<!--        </div>-->
       </q-card-section>
       <q-card-section>
         <q-btn
@@ -78,7 +67,6 @@ const back = ref<string>('');
 const reference = ref<string>('');
 
 const onSubmit = async () => {
-  console.log('onSubmit Start');
   const request: CreateCardRequest = {
     front: front.value,
     back: back.value,

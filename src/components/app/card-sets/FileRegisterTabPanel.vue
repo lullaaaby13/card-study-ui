@@ -1,19 +1,25 @@
 <template>
-  <q-tab-panel>
-    <q-form>
+  <q-tab-panel :name="name">
+    <q-form class="q-gutter-y-md">
+      <q-input
+        :model-value="fileTemplate"
+        disable
+        type="textarea"
+        label="텍스트 파일 예시"
+        stack-label
+        autogrow
+      />
       <q-input
         v-model="fileFiled"
         filled
         type="file"
       />
-      <q-card-section>
-        <q-btn
-          color="primary"
-          label="등록"
-          class="full-width"
-          @click="onRegisterButtonClick"
-        />
-      </q-card-section>
+      <q-btn
+        color="primary"
+        label="등록"
+        class="full-width"
+        @click="onRegisterButtonClick"
+      />
     </q-form>
   </q-tab-panel>
 </template>
@@ -25,13 +31,20 @@ import {useCardStore} from "stores/card-store";
 
 let cardStore = useCardStore();
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   cardSetId: {
     type: Number,
     required: true,
   },
+  fileTemplate: {
+    type: String,
+    required: true,
+  },
 });
 
-const emits = defineEmits(['loadStudyCards']);
 
 const fileFiled = ref(null);
 
@@ -40,7 +53,6 @@ const onRegisterButtonClick = async () => {
     await createCardByFile(props.cardSetId, fileFiled.value[0]);
     fileFiled.value = null;
     await cardStore.fetchAll(props.cardSetId);
-    emits('loadStudyCards');
   }
 }
 
