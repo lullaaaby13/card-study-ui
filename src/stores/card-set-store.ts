@@ -1,7 +1,7 @@
 import {defineStore} from 'pinia';
 import {ref} from "vue";
-import CardSet from "src/types/card-set";
-import {addCardSet, deleteCardSet, getCardSets, updateCardSet} from "src/api/card-set";
+import {CardSet} from "src/types/card-set";
+import {addCardSet, AddCardSetRequest, deleteCardSet, getCardSets, updateCardSet} from "src/api/card-set";
 
 export const useCardSetStore = defineStore('cardSetStore', () => {
   const cardSets = ref<CardSet[]>([]);
@@ -9,11 +9,13 @@ export const useCardSetStore = defineStore('cardSetStore', () => {
   const fetchAll = async () => {
     let list = await getCardSets();
     cardSets.value.splice(0, cardSets.value.length);
+
     list.forEach((cardSet: CardSet) => {
+      console.log(cardSet);
       cardSets.value.push(cardSet);
     });
   }
-  const save = async (request: { name: string, description?: string }) => {
+  const save = async (request: AddCardSetRequest) => {
     await addCardSet(request);
     await fetchAll();
   }

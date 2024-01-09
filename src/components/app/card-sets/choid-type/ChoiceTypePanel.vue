@@ -31,7 +31,7 @@
 
 import BaseCard from "components/BaseCard.vue";
 import {ref} from "vue";
-import CardSet from "src/types/card-set";
+import {CardSet} from "src/types/card-set";
 import FileRegisterTabPanel from "components/app/card-sets/FileRegisterTabPanel.vue";
 import ChoiceTypeManualRegisterTabPanel from "components/app/card-sets/choid-type/ChoiceTypeManualRegisterTabPanel.vue";
 
@@ -44,12 +44,14 @@ const fileTemplate = ref(`
   2. complicates
   3. complicate
   4. complicated
+  - Answer of the question.
   @@
   Customer reviews indicate that many modern mobile devices are often unnecessarily ____.
   1. complication
   2. complicates
   3. complicate
   4. complicated
+  - Answer of the question.
   @@
 `);
 

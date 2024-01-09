@@ -31,6 +31,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {useCardSetStore} from "stores/card-set-store";
+import {CardSetType} from "src/types/card-set";
 
 const cardSetStore = useCardSetStore();
 
@@ -44,20 +45,22 @@ const emits = defineEmits(['update:modelValue']);
 
 const cardSetName = ref('');
 const cardSetDescription = ref('');
-const cardSetTypeOptions = [
+const cardSetTypeOptions: { label: string, value: CardSetType }[] = [
   {
     label: '단어형',
-    value: 'WORD'
+    value: CardSetType.WORD,
   },
   {
     label: '선다형',
-    value: 'MULTIPLE_CHOICE'
+    value: CardSetType.CHOICE,
   }
 ];
 const cardSetType = ref(cardSetTypeOptions[0]);
 
+
 const onCardSetCreateButtonClick = async () => {
   await cardSetStore.save({
+    type: cardSetType.value.value,
     name: cardSetName.value,
     description: cardSetDescription.value,
   })

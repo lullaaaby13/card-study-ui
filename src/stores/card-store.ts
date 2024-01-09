@@ -2,11 +2,11 @@ import {defineStore} from 'pinia';
 import {computed, ref} from "vue";
 import {Card, CreateCardRequest} from "src/types/card";
 import {createCard, deleteCard, getCards, updateCard} from "src/api/card";
-import CardSet from "src/types/card-set";
+import {CardSet} from "src/types/card-set";
 import {date} from "quasar";
 
 export const useCardStore = defineStore('cardStore', () => {
-  const selectedCardSet = ref<CardSet | null>(null);
+
   const cards = ref<Card[]>([]);
 
   const fetchAll = async (cardSetId: number) => {
@@ -24,8 +24,9 @@ export const useCardStore = defineStore('cardStore', () => {
 
   const remove = async (cardId: number) => {
     await deleteCard(cardId);
-    if (selectedCardSet.value) {
-      await fetchAll(selectedCardSet.value.id);
+    const index = cards.value.findIndex(it => it.id === cardId);
+    if (index > -1) {
+      cards.value.splice(index, 1);
     }
   };
   const clear = () => {
@@ -59,7 +60,6 @@ export const useCardStore = defineStore('cardStore', () => {
   }
 
   return {
-    selectedCardSet,
     cards,
     fetchAll,
     clear,

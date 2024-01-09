@@ -37,7 +37,7 @@
     <div>
       <q-badge
         rounded
-        label="단어형"
+        :label="labelOfCardSetType(cardSet.type)"
       />
     </div>
     <q-separator class="q-my-md"/>
@@ -59,7 +59,7 @@
 import TileCard from "components/TileCard.vue";
 import {useRouter} from "vue-router";
 import {useCardSetStore} from "stores/card-set-store";
-import CardSet from "src/types/card-set";
+import {CardSet, labelOfCardSetType} from "src/types/card-set";
 import {ref} from "vue";
 
 const router = useRouter();
@@ -73,6 +73,7 @@ const descriptionField = ref(null);
 const descriptionFieldValue = ref<string | undefined>();
 
 const cardSet = defineProps<CardSet>();
+
 
 const onDeleteButtonClick = async (cardSetId: number) => {
   if (confirm('정말 삭제하시겠습니까?')) {

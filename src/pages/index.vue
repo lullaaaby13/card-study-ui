@@ -33,9 +33,6 @@ onMounted(async () => {
   await cardSetStore.fetchAll();
 });
 
-
-
-
 </script>
 
 <route lang="yaml">

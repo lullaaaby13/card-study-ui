@@ -19,9 +19,6 @@
               <div class="text-caption">
                 <span class="text-bold">생성일</span>: {{ cardSet.createdAt }}
               </div>
-<!--              <div class="text-caption">-->
-<!--                최근 공부: {{ cardSet.lastReviewedAt }}-->
-<!--              </div>-->
             </div>
             <div class="col-8 flex justify-end">
               <MemorizationSummary v-bind="memorizationLevelSummary" :activatedItem="selectedStudyTarget.value"/>
@@ -29,18 +26,10 @@
           </div>
         </div>
 
-
         <div class="q-mt-md">
-<!--          <WordTypeCardCreationPanel-->
-<!--            :card-set="cardSet"-->
-<!--          />-->
-              <ChoiceTypePanel
-                :card-set="cardSet"
-              />
+          <WordTypePanel v-if="cardSet.type === CardSetType.WORD" :card-set="cardSet"/>
+          <ChoiceTypePanel v-else-if="cardSet.type === CardSetType.CHOICE" :card-set="cardSet"/>
         </div>
-
-
-<!--        <q-separator class="q-my-md"/>-->
 
         <div class="flex items-center q-my-md q-gutter-md">
           <q-input v-model="searchText" label="검색(앞면)" stack-label style="width: 30vw;"/>
@@ -60,17 +49,15 @@
 
 import {computed, onMounted, onUnmounted, ref} from "vue";
 import {useCardSetStore} from "stores/card-set-store";
-import CardSet from "src/types/card-set";
+import {CardSet, CardSetType} from "src/types/card-set";
 import {useRoute, useRouter} from "vue-router";
 import {useCardStore} from "stores/card-store";
 import {Card, MemorizationLevel} from "src/types/card";
 import MemorizationSummary from "components/app/card-sets/MemorizationSummary.vue";
-import ManualRegisterTabPanel from "components/app/card-sets/word-type/WordTypeManualRegisterTabPanel.vue";
-import FileRegisterTabPanel from "components/app/card-sets/FileRegisterTabPanel.vue";
 import RegisteredCard from "components/app/card-sets/word-type/WordTypeCard.vue";
 import {useStudyCardStore} from "stores/study-card-store";
-import WordTypeCardCreationPanel from "components/app/card-sets/word-type/WordTypePanel.vue";
 import ChoiceTypePanel from "components/app/card-sets/choid-type/ChoiceTypePanel.vue";
+import WordTypePanel from "components/app/card-sets/word-type/WordTypePanel.vue";
 
 let cardStore = useCardStore();
 let cardSetStore = useCardSetStore();
@@ -83,12 +70,14 @@ const cardSet = ref<CardSet>({
   description: '',
   totalCardCount: 0,
   toStudyCardCount: 0,
+  type: CardSetType.WORD,
   createdAt: '',
   updatedAt: '',
 });
 
 onMounted(async () => {
 
+  // @ts-ignore
   let id = Number(route.params.id);
   if (isNaN(id)) {
     alert('올바르지 않은 카드 세트 입니다.');
@@ -100,12 +89,14 @@ onMounted(async () => {
   }
 
   const findCardSet = cardSetStore.findById(id);
+
+  console.log('cardSet: ', findCardSet);
+
   if (!findCardSet) {
     alert('올바르지 않은 카드 세트 입니다.');
     router.push('/');
   } else {
     cardSet.value = findCardSet;
-    cardStore.selectedCardSet = findCardSet;
     await cardStore.fetchAll(id);
   }
 
@@ -132,13 +123,10 @@ const memorizationLevelSummary = computed(() => {
     summary[card.memorizationLevel] += 1;
   });
 
-  let now = new Date();
   summary.ToStudy = cardStore.toStudyCards.length;
-
   return summary;
 });
 
-const tab = ref('manual');
 const searchText = ref('');
 
 const filteredCard = computed(() => {
@@ -182,9 +170,6 @@ const loadStudyCards = (optionValue: string) => {
     studyCardStore.load(cards.filter(card => card.memorizationLevel === optionValue));
   }
 }
-
-
-
 
 </script>
 
