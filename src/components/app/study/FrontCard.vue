@@ -20,9 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import {Card} from "src/types/card";
+import {WordCard} from "src/types/word-card";
 
-const card = defineProps<Card>();
+const card = defineProps<WordCard>();
 let emits = defineEmits(['changeStage']);
 
 const onCheckAnswerClick = () => {

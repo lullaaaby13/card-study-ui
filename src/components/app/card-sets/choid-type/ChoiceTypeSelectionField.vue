@@ -8,14 +8,14 @@
     lazy-rules
   >
     <template v-slot:append>
-      <q-checkbox v-model="choice.isCorrect"/>
+      <q-checkbox v-model="choice.isAnswer"/>
     </template>
   </q-input>
 </template>
 
 <script setup lang="ts">
 
-import {Choice} from "src/types/card";
+import {Choice} from "src/types/word-card";
 import {PropType} from "vue";
 
 

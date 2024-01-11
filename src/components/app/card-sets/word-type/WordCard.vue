@@ -36,13 +36,13 @@
 <script setup lang="ts">
 
 import {date} from "quasar";
-import {Card} from "src/types/card";
-import {useCardStore} from "stores/card-store";
+import {WordCard} from "src/types/word-card";
+import {useWordCardStore} from "stores/word-card-store";
 import {ref} from "vue";
 
-let cardStore = useCardStore();
+let cardStore = useWordCardStore();
 
-const card = defineProps<Card>();
+const card = defineProps<WordCard>();
 const onDeleteCardButtonClick = async (id: number) => {
   if (confirm('정말 삭제하시겠습니까?')) {
     await cardStore.remove(id);
@@ -55,7 +55,7 @@ const toggleUpdateBackField = ref(false);
 const backField = ref<string | undefined>();
 
 const onClickFront = () => {
-  frontField.value = card.front;
+  frontField.value = card.question;
   toggleUpdateFrontField.value = true;
 };
 
@@ -65,7 +65,7 @@ const onBlurFrontField = async () => {
 };
 
 const onClickBack = () => {
-  backField.value = card.back;
+  backField.value = card.answer;
   toggleUpdateBackField.value = true;
 };
 

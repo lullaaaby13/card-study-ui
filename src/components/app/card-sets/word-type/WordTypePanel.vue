@@ -34,15 +34,15 @@
 
 <script setup lang="ts">
 
-import FileRegisterTabPanel from "components/app/card-sets/FileRegisterTabPanel.vue";
+import FileRegisterTabPanel from "components/app/card-sets/word-type/FileRegisterTabPanel.vue";
 import ManualRegisterTabPanel from "components/app/card-sets/word-type/WordTypeManualRegisterTabPanel.vue";
 import {ref} from "vue";
-import {useCardStore} from "stores/card-store";
+import {useWordCardStore} from "stores/word-card-store";
 import {useStudyCardStore} from "stores/study-card-store";
-import CardSet from "src/types/card-set";
+import {CardSet} from "src/types/card-set";
 import BaseCard from "components/BaseCard.vue";
 
-const cardStore = useCardStore();
+const cardStore = useWordCardStore();
 const studyCardStore = useStudyCardStore();
 const { cardSet } = defineProps<{ cardSet: CardSet }>();
 const splitter = ref(8);

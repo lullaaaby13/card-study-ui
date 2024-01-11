@@ -35,7 +35,7 @@
 <script setup lang="ts">
 
 import {useStudyCardStore} from "stores/study-card-store";
-import {Card} from "src/types/card";
+import {WordCard} from "src/types/word-card";
 import {AddStudyResult} from "src/api/study";
 
 let studyCardStore = useStudyCardStore();
@@ -46,7 +46,7 @@ let studyCardStore = useStudyCardStore();
 //     required: true
 //   }
 // });
-const card = defineProps<Card>();
+const card = defineProps<WordCard>();
 let emits = defineEmits(['changeStage', 'setCurrentCard']);
 const onDontKnowClick = async () => {
   console.log('몰라요');

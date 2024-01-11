@@ -1,8 +1,8 @@
 import {beforeEach, describe, expect, it} from "vitest";
-import {Card} from "src/types/card";
+import {WordCard} from "src/types/word-card";
 import {Bucket} from "src/types/study";
 
-const cards: Card[] = [
+const cards: WordCard[] = [
   {
     id: 1,
     front: 'Apple',

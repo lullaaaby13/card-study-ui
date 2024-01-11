@@ -90,6 +90,7 @@ onErrorCaptured( (err, instance, info) => {
   } else {
     errorMessage.value = err.message;
   }
+  console.error(err.message, err);
   return false;
 });
 

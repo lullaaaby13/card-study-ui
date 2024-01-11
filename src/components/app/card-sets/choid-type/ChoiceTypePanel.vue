@@ -32,7 +32,7 @@
 import BaseCard from "components/BaseCard.vue";
 import {ref} from "vue";
 import {CardSet} from "src/types/card-set";
-import FileRegisterTabPanel from "components/app/card-sets/FileRegisterTabPanel.vue";
+import FileRegisterTabPanel from "components/app/card-sets/word-type/FileRegisterTabPanel.vue";
 import ChoiceTypeManualRegisterTabPanel from "components/app/card-sets/choid-type/ChoiceTypeManualRegisterTabPanel.vue";
 
 const { cardSet } = defineProps<{ cardSet: CardSet }>();

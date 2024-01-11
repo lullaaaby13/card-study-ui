@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import {ref} from "vue";
-import {Card, MemorizationLevelKey} from "src/types/card";
+import {WordCard, MemorizationLevelKey} from "src/types/word-card";
 import {Bucket} from "src/types/study";
 
 export const useStudyCardStore = defineStore('studyCardStore', () => {
-  const cards = ref<Card[]>([
+  const cards = ref<WordCard[]>([
     // {
     //   id: 1,
     //   front: 'Apple',
@@ -36,9 +36,9 @@ export const useStudyCardStore = defineStore('studyCardStore', () => {
   const bucket = ref<Bucket>(new Bucket());
 
 
-  const load = (toStudyCards: Card[]) => {
+  const load = (toStudyCards: WordCard[]) => {
     clear();
-    toStudyCards.forEach((card: Card) => {
+    toStudyCards.forEach((card: WordCard) => {
       cards.value.push(card);
     });
   }
@@ -51,8 +51,8 @@ export const useStudyCardStore = defineStore('studyCardStore', () => {
     bucket.value.clear();
   }
 
-  const remove = (card: Card) => {
-    const index = cards.value.findIndex((c: Card) => c.id === card.id);
+  const remove = (card: WordCard) => {
+    const index = cards.value.findIndex((c: WordCard) => c.id === card.id);
     if (index !== -1) {
       cards.value.splice(index, 1);
     }
@@ -60,7 +60,7 @@ export const useStudyCardStore = defineStore('studyCardStore', () => {
     bucket.value.removeCard(card);
   };
 
-  const nextCard = (): Card | undefined => {
+  const nextCard = (): WordCard | undefined => {
     return bucket.value.nextCard();
   }
 

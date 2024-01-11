@@ -1,19 +1,19 @@
-import {Card} from "src/types/card";
+import {WordCard} from "src/types/word-card";
 
 export class Bucket {
-  private readonly cards: Card[] = [];
+  private readonly cards: WordCard[] = [];
   private nextCardIndex = 0;
 
   constructor() {}
 
-  load(cards: Card[]) {
+  load(cards: WordCard[]) {
     this.clear();
-    cards.forEach((card: Card) => {
+    cards.forEach((card: WordCard) => {
       this.cards.push(card);
     });
   }
 
-  nextCard(): Card | undefined {
+  nextCard(): WordCard | undefined {
     let card = this.cards[this.nextCardIndex];
     this.increaseNextCardIndex();
     return card;
@@ -39,8 +39,8 @@ export class Bucket {
     }
   }
 
-  removeCard(card: Card) {
-    const index = this.cards.findIndex((c: Card) => c.id === card.id);
+  removeCard(card: WordCard) {
+    const index = this.cards.findIndex((c: WordCard) => c.id === card.id);
     if (index !== -1) {
       this.cards.splice(index, 1);
       this.decreaseNextCardIndex();

@@ -1,29 +1,27 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from "vue";
-import {Card, CreateCardRequest} from "src/types/card";
-import {createCard, deleteCard, getCards, updateCard} from "src/api/card";
-import {CardSet} from "src/types/card-set";
 import {date} from "quasar";
+import {CardSetType} from "src/types/card-set";
+import {ChoiceCardApi} from "src/api/choice-card";
+import {ChoiceCard, CreateChoiceCardRequest} from "src/types/choice-card";
 
-export const useCardStore = defineStore('cardStore', () => {
 
-  const cards = ref<Card[]>([]);
+export const useChoiceCardStore = defineStore('choiceCardStore', () => {
+
+  const cards = ref<ChoiceCard[]>([]);
 
   const fetchAll = async (cardSetId: number) => {
     clear();
-    (await getCards(cardSetId))
-      .forEach((card: Card) => {
-        cards.value.push(card);
-      });
+    cards.value = await ChoiceCardApi.getCards(cardSetId);
   };
 
-  const save = async (request: CreateCardRequest) => {
-    const card: Card = await createCard(request);
+  const save = async (request: CreateChoiceCardRequest) => {
+    const card: ChoiceCard = await ChoiceCardApi.createCard(request);
     cards.value.unshift(card);
   };
 
   const remove = async (cardId: number) => {
-    await deleteCard(cardId);
+    await ChoiceCardApi.deleteCard(cardId);
     const index = cards.value.findIndex(it => it.id === cardId);
     if (index > -1) {
       cards.value.splice(index, 1);
@@ -40,21 +38,21 @@ export const useCardStore = defineStore('cardStore', () => {
     })
   });
 
-  const findById = (cardId: number): Card | undefined => {
+  const findById = (cardId: number): ChoiceCard | undefined => {
     return cards.value.find(it => it.id === cardId);
   }
 
-  const replace = (card: Card) => {
+  const replace = (card: ChoiceCard) => {
     const index = cards.value.findIndex(it => it.id === card.id);
     if (index > -1) {
       cards.value.splice(index, 1, card);
     }
   }
 
-  const update = async (cardId: number, request: { front?: string, back?: string}) => {
+  const update = async (cardId: number, request: { question?: string, answer?: string}) => {
     const card = findById(cardId);
     if (card) {
-      let updatedCard = await updateCard(cardId, request);
+      let updatedCard = await ChoiceCardApi.updateCard(cardId, request);
       replace(updatedCard);
     }
   }

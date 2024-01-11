@@ -26,10 +26,10 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-import {createCardByFile} from "src/api/card";
-import {useCardStore} from "stores/card-store";
+import {useWordCardStore} from "stores/word-card-store";
+import {WordCardApi} from "src/api/word-card";
 
-let cardStore = useCardStore();
+let cardStore = useWordCardStore();
 const props = defineProps({
   name: {
     type: String,
@@ -50,7 +50,7 @@ const fileFiled = ref(null);
 
 const onRegisterButtonClick = async () => {
   if (fileFiled.value) {
-    await createCardByFile(props.cardSetId, fileFiled.value[0]);
+    await WordCardApi.createCardByFile(props.cardSetId, fileFiled.value[0]);
     fileFiled.value = null;
     await cardStore.fetchAll(props.cardSetId);
   }

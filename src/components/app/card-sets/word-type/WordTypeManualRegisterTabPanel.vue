@@ -6,7 +6,7 @@
           <q-input
             id="front"
             ref="frontField"
-            v-model="front"
+            v-model="question"
             type="textarea"
             outlined
             stack-label
@@ -20,7 +20,7 @@
           <q-input
             id="back"
             ref="backField"
-            v-model="back"
+            v-model="answer"
             type="textarea"
             outlined
             stack-label
@@ -46,10 +46,10 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
-import {useCardStore} from "stores/card-store";
-import {CreateCardRequest} from "src/types/card";
+import {useWordCardStore} from "stores/word-card-store";
+import {CreateWordCardRequest} from "src/types/word-card";
 
-let cardStore = useCardStore();
+let cardStore = useWordCardStore();
 
 const props = defineProps({
   cardSetId: {
@@ -62,22 +62,19 @@ const frontField = ref(null);
 const backField = ref(null);
 const referenceField = ref(null);
 
-const front = ref<string>('');
-const back = ref<string>('');
-const reference = ref<string>('');
+const question = ref<string>('');
+const answer = ref<string>('');
 
 const onSubmit = async () => {
-  const request: CreateCardRequest = {
-    front: front.value,
-    back: back.value,
-    reference: reference.value,
+  const request: CreateWordCardRequest = {
+    question: question.value,
+    answer: answer.value,
     cardSetId: props.cardSetId,
   };
 
   await cardStore.save(request);
-  front.value = '';
-  back.value = '';
-  reference.value = '';
+  question.value = '';
+  answer.value = '';
   // @ts-ignore
   frontField.value?.focus();
 };

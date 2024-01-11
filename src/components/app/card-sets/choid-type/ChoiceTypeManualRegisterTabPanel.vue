@@ -51,7 +51,7 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
-import {Choice} from "src/types/card";
+import {Choice} from "src/types/word-card";
 import ChoiceTypeSelectionField from "components/app/card-sets/choid-type/ChoiceTypeSelectionField.vue";
 
 defineProps({
@@ -71,27 +71,27 @@ const choices = ref<Choice[]>([
   {
     order: 1,
     value: '',
-    isCorrect: false,
+    isAnswer: false,
   },
   {
     order: 2,
     value: '',
-    isCorrect: false,
+    isAnswer: false,
   },
   {
     order: 3,
     value: '',
-    isCorrect: false,
+    isAnswer: false,
   },
   {
     order: 4,
     value: '',
-    isCorrect: false,
+    isAnswer: false,
   },
   {
     order: 5,
     value: '',
-    isCorrect: false,
+    isAnswer: false,
   }
 ]);
 
@@ -100,7 +100,7 @@ const onChoiceUpdated = (choice: Choice, updated: { value?: string, isCorrect?: 
     choice.value = updated.value;
   }
   if (updated.isCorrect) {
-    choice.isCorrect = updated.isCorrect;
+    choice.isAnswer = updated.isCorrect;
   }
 };
 

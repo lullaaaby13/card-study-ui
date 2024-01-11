@@ -54,14 +54,14 @@
 
 import {useStudyCardStore} from "stores/study-card-store";
 import {onMounted, ref} from "vue";
-import {Card, emptyCard} from "src/types/card";
+import {WordCard, emptyCard} from "src/types/word-card";
 import FrontCard from "components/app/study/FrontCard.vue";
 import BackCard from "components/app/study/BackCard.vue";
 import EmptyBucket from "components/app/study/EmptyBucket.vue";
 
 let studyCardStore = useStudyCardStore();
 
-const currentCard = ref<Card | undefined>(emptyCard);
+const currentCard = ref<WordCard | undefined>(emptyCard);
 const stage = ref<'Front' | 'Back' | 'Empty'>('Front');
 
 
@@ -94,7 +94,7 @@ const changeStage = () => {
   console.log('After ChangeStage:', stage.value);
 };
 
-const setCurrentCard = (card: Card) => {
+const setCurrentCard = (card: WordCard) => {
   currentCard.value = card;
 };
 
