@@ -1,6 +1,9 @@
 import {api} from "boot/axios";
 
-export async function AddStudyResult(cardId: number, studyResult: 'CORRECT' | 'WRONG') {
-  const { data } = await api.post('/api/study', { cardId, studyResult } );
-  return data;
+export default class StudyApi {
+  static async AddStudyResult(cardSetId: number, cardId: number, studyResult: 'CORRECT' | 'WRONG') {
+    const { data } = await api.post('/api/study', { cardSetId, cardId, studyResult } );
+    return data;
+  }
 }
+

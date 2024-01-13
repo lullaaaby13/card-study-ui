@@ -5,12 +5,12 @@
   >
     <q-card-section>
       <div class="text-caption text-gre-7">
-        앞면
+        질문
       </div>
     </q-card-section>
 
     <q-card-section class="text-h6 text-bold text-center q-my-md">
-      {{front}}
+      {{question}}
     </q-card-section>
 
     <q-card-actions class="flex justify-center">
@@ -23,7 +23,8 @@
 import {WordCard} from "src/types/word-card";
 
 const card = defineProps<WordCard>();
-let emits = defineEmits(['changeStage']);
+const emits = defineEmits(['changeStage']);
+
 
 const onCheckAnswerClick = () => {
   emits('changeStage');

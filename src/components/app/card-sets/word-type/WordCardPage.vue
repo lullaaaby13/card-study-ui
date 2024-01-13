@@ -67,19 +67,8 @@ onUnmounted(() => {
 
 /** STUDY **/
 const studyCardStore = useStudyCardStore();
-const selectedStudyTarget = ref({ label: '공부할 카드', value: 'ToStudy' });
-const onStudyTargetSelected = (option: { label:string, value: string }) => {
-  selectedStudyTarget.value = option;
-  loadStudyCards(option.value);
-};
 
-const loadStudyCards = (optionValue: string) => {
-  let cards = wordCardStore.cards;
-  if (optionValue === 'ToStudy') {
-    studyCardStore.load(wordCardStore.toStudyCards);
-  } else {
-    studyCardStore.load(cards.filter(card => card.memorizationLevel === optionValue));
-  }
-}
+
+
 
 </script>

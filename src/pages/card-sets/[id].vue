@@ -9,17 +9,23 @@
               <h5>{{ cardSet.name }}</h5>
             </div>
             <div class="col-6 flex justify-end items-center q-gutter-md">
-<!--              <q-select v-model="selectedStudyTarget" @update:model-value="onStudyTargetSelected" outlined label="암기 레벨" :options="studyTargetOptions" stack-label style="width: 200px;"/>-->
-              <q-select outlined
-                        label="암기 레벨"
-                        :options="studyTargetOptions"
-                        stack-label
-                        style="width: 200px;"/>
-              <q-btn label="공부 시작"
-                     color="primary"
-                     size="lg"
-                     to="/study"
-                     :disable="disableStudyButton"/>
+              <q-toggle
+                v-model="isShuffleStudyCards"
+                label="카드 순서 랜덤"
+              />
+            <q-select v-model="selectedStudyTarget"
+                      @update:model-value="onStudyTargetSelected"
+                      outlined
+                      label="암기 레벨"
+                      :options="studyTargetOptions"
+                      stack-label
+                      style="width: 200px;"
+            />
+            <q-btn label="공부 시작"
+                   color="primary"
+                   size="lg"
+                   @click="onStudyStartButtonClick"
+                   :disable="disableStudyButton"/>
             </div>
           </div>
 
@@ -30,8 +36,7 @@
               </div>
             </div>
             <div class="col-8 flex justify-end">
-<!--              <MemorizationSummary v-bind="memorizationLevelSummary" :activatedItem="selectedStudyTarget.value"/>-->
-              <MemorizationSummary v-bind="summary"/>
+              <MemorizationSummary v-bind="summary" :activatedItem="selectedStudyTarget.value"/>
             </div>
           </div>
         </div>
@@ -65,10 +70,11 @@ import {useWordCardStore} from "stores/word-card-store";
 import {ChoiceCard} from "src/types/choice-card";
 
 
-const cardSetStore = useCardSetStore();
-const wordCardStore = useWordCardStore();
 const route = useRoute();
 const router = useRouter();
+const cardSetStore = useCardSetStore();
+const wordCardStore = useWordCardStore();
+const studyCardStore = useStudyCardStore();
 
 const cardSet = ref<CardSet | undefined>();
 
@@ -105,13 +111,34 @@ const summary = computed(() => {
   }
 });
 
-
+const selectedStudyTarget = ref({ label: '공부할 카드', value: 'ToStudy' });
+const onStudyTargetSelected = (option: { label:string, value: string }) => {
+  selectedStudyTarget.value = option;
+  loadStudyCards(option.value);
+};
+const loadStudyCards = (optionValue: string) => {
+  let cards = wordCardStore.cards;
+  if (optionValue === 'ToStudy') {
+    studyCardStore.load(wordCardStore.toStudyCards);
+  } else {
+    studyCardStore.load(cards.filter(card => card.memorizationLevel === optionValue));
+  }
+}
 const studyTargetOptions = [{ label: '공부할 카드', value: 'ToStudy' }, ...Object.values(MemorizationLevel)];
 const disableStudyButton = computed(() => {
   return studyCardStore.isEmpty();
 });
-const studyCardStore = useStudyCardStore();
 
+const onStudyStartButtonClick = () => {
+  studyCardStore.cardSet = cardSet.value;
+  loadStudyCards(selectedStudyTarget.value.value);
+  if (isShuffleStudyCards.value) {
+    studyCardStore.shuffle();
+  }
+  router.push('/study');
+}
+
+const isShuffleStudyCards = ref(true);
 </script>
 
 <route lang="yaml">

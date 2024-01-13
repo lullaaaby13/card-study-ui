@@ -50,9 +50,12 @@ const fileFiled = ref(null);
 
 const onRegisterButtonClick = async () => {
   if (fileFiled.value) {
-    await WordCardApi.createCardByFile(props.cardSetId, fileFiled.value[0]);
+    const wordCards = await WordCardApi.createCardByFile(props.cardSetId, fileFiled.value[0]);
     fileFiled.value = null;
-    await cardStore.fetchAll(props.cardSetId);
+    wordCards.forEach((wordCard) => {
+      cardStore.add(wordCard);
+    });
+    alert(`${wordCards.length} 개의 카드가 등록되었습니다.`)
   }
 }
 

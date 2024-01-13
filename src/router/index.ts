@@ -45,12 +45,6 @@ export default route(function (/* { store, ssrContext } */) {
       } else {
         next();
       }
-    } else if (to.matched.some(record => record.meta.guest)) {
-      if (localStorage.getItem('token') == null) {
-        next();
-      } else {
-        next({ name: 'Home' });
-      }
     } else {
       next();
     }

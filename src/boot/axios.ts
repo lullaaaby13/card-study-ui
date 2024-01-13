@@ -31,8 +31,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  let accessToken = Cookies.get('accessToken');
-  console.log('api.interceptors.request.use accessToken: ', accessToken);
+  const accessToken = Cookies.get('accessToken');
   if (accessToken) {
     config.headers['Authorization'] = `Bearer ${Cookies.get('accessToken')}`;
   }

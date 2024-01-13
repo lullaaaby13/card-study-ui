@@ -14,7 +14,7 @@
               </div>
             </div>
             <div class="col-6 flex justify-end items-center q-gutter-md">
-              <q-btn label="종료" color="grey" to="/"/>
+              <q-btn label="종료" color="grey" @click="onFinishButtonClick"/>
             </div>
           </div>
           <div class="row q-gutter-md justify-center items-center">
@@ -40,7 +40,7 @@
           <q-item-label header>바구니에 담긴 카드</q-item-label>
           <template v-for="(card, index) in studyCardStore.bucket.getCards()" :key="index">
             <q-item>
-              <q-item-section>{{card.front}}</q-item-section>
+              <q-item-section>{{card.question}}</q-item-section>
             </q-item>
             <q-separator/>
           </template>
@@ -54,12 +54,14 @@
 
 import {useStudyCardStore} from "stores/study-card-store";
 import {onMounted, ref} from "vue";
-import {WordCard, emptyCard} from "src/types/word-card";
-import FrontCard from "components/app/study/FrontCard.vue";
-import BackCard from "components/app/study/BackCard.vue";
+import {emptyCard, WordCard} from "src/types/word-card";
+import FrontCard from "components/app/study/QuestionCard.vue";
+import BackCard from "components/app/study/AnswerCard.vue";
 import EmptyBucket from "components/app/study/EmptyBucket.vue";
+import {useRouter} from "vue-router";
 
-let studyCardStore = useStudyCardStore();
+const router = useRouter();
+const studyCardStore = useStudyCardStore();
 
 const currentCard = ref<WordCard | undefined>(emptyCard);
 const stage = ref<'Front' | 'Back' | 'Empty'>('Front');
@@ -76,7 +78,6 @@ onMounted(() => {
 });
 
 const changeStage = () => {
-  console.log('Before ChangeStage:', stage.value, studyCardStore.isBucketEmpty());
 
   if (studyCardStore.isBucketEmpty()) {
     stage.value = 'Empty';
@@ -98,6 +99,9 @@ const setCurrentCard = (card: WordCard) => {
   currentCard.value = card;
 };
 
+const onFinishButtonClick = () => {
+  router.push(`/card-sets/${studyCardStore.cardSet.id}`);
+};
 
 </script>
 

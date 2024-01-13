@@ -22,7 +22,7 @@
     </q-card-section>
 
     <q-card-section class="text-h6 text-bold text-center q-my-md">
-      {{back}}
+      {{answer}}
     </q-card-section>
 
     <q-card-actions class="flex justify-center">
@@ -36,30 +36,28 @@
 
 import {useStudyCardStore} from "stores/study-card-store";
 import {WordCard} from "src/types/word-card";
-import {AddStudyResult} from "src/api/study";
+import StudyApi, {AddStudyResult} from "src/api/study";
+import {onMounted, ref} from "vue";
+import {CardSet} from "src/types/card-set";
 
-let studyCardStore = useStudyCardStore();
+const studyCardStore = useStudyCardStore();
 
-// defineProps({
-//   back: {
-//     type: String,
-//     required: true
-//   }
-// });
+const cardSet = ref<CardSet>();
 const card = defineProps<WordCard>();
 let emits = defineEmits(['changeStage', 'setCurrentCard']);
+
+onMounted(() => {
+  cardSet.value = studyCardStore.cardSet;
+});
 const onDontKnowClick = async () => {
-  console.log('몰라요');
-  // TODO API 호출 / 암기 레벨 하락
-  await AddStudyResult(card.id, 'WRONG');
+  await StudyApi.AddStudyResult(cardSet.value.id, card.id, 'WRONG');
   emits('setCurrentCard', studyCardStore.nextCard());
   emits('changeStage');
 };
 
 const onKnowClick = async () => {
   console.log('알아요');
-  // TODO API 호출 / 암기 레벨 상승
-  await AddStudyResult(card.id, 'CORRECT');
+  await StudyApi.AddStudyResult(cardSet.value.id, card.id, 'CORRECT');
   studyCardStore.remove(card);
   emits('setCurrentCard', studyCardStore.nextCard());
   emits('changeStage');

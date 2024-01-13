@@ -36,6 +36,7 @@ onMounted(async () => {
 </script>
 
 <route lang="yaml">
+name: Home
 meta:
   title: Home
   layout: default

@@ -14,6 +14,10 @@ export const useWordCardStore = defineStore('wordCardStore', () => {
     cards.value = await WordCardApi.getCards(cardSetId);
   };
 
+  const add = (card: WordCard) => {
+    cards.value.unshift(card);
+  }
+
   const save = async (request: CreateWordCardRequest) => {
     const card: WordCard = await WordCardApi.createCard(request);
     cards.value.unshift(card);
@@ -80,6 +84,7 @@ export const useWordCardStore = defineStore('wordCardStore', () => {
     cards,
     fetchAll,
     clear,
+    add,
     save,
     remove,
     toStudyCards,

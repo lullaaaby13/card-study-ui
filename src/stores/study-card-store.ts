@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
 import {ref} from "vue";
-import {WordCard, MemorizationLevelKey} from "src/types/word-card";
+import {WordCard} from "src/types/word-card";
 import {Bucket} from "src/types/study";
+import {CardSet} from "src/types/card-set";
 
 export const useStudyCardStore = defineStore('studyCardStore', () => {
+  const cardSet = ref<CardSet>();
   const cards = ref<WordCard[]>([
     // {
     //   id: 1,
@@ -34,7 +36,6 @@ export const useStudyCardStore = defineStore('studyCardStore', () => {
     // },
   ]);
   const bucket = ref<Bucket>(new Bucket());
-
 
   const load = (toStudyCards: WordCard[]) => {
     clear();
@@ -72,7 +73,12 @@ export const useStudyCardStore = defineStore('studyCardStore', () => {
     return cards.value.length === 0;
   }
 
+  const shuffle = () => {
+    cards.value.sort(() => Math.random() - 0.5);
+  }
+
   return {
+    cardSet,
     cards,
     bucket,
     load,
@@ -82,5 +88,6 @@ export const useStudyCardStore = defineStore('studyCardStore', () => {
     nextCard,
     isBucketEmpty,
     isEmpty,
+    shuffle,
   }
 });
