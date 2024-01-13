@@ -3,7 +3,6 @@
     <div class=" q-pa-sm flex justify-between">
       <div>
         <div class="text-subtitle2 text-bold">{{card.id}}</div>
-        <div>{{card.reference}}</div>
         <div class="q-gutter-x-md text-caption">
           <span>
             <span class="text-bold">생성일</span>: {{ date.formatDate(card.createdAt, 'YYYY-MM-DD HH:mm') }}
@@ -20,14 +19,14 @@
     </div>
     <q-card-section class="flex justify-around">
       <q-card bordered class="q-pa-sm" flat style="width: 30vw;">
-        <div class="text-caption text-grey-6 q-mb-md">앞면</div>
-        <div v-if="!toggleUpdateFrontField" @click="onClickFront">{{ card.front }}</div>
-        <q-input v-if="toggleUpdateFrontField" v-model="frontField" type="textarea" @blur="onBlurFrontField"/>
+        <div class="text-caption text-grey-6 q-mb-md">질문</div>
+        <div v-if="!toggleUpdateFrontField" @click="onClickFront">{{ card.question }}</div>
+        <q-input v-if="toggleUpdateFrontField" v-model="questionField" type="textarea" @blur="onBlurFrontField"/>
       </q-card>
       <q-card bordered class="q-pa-sm" flat style="width: 30vw;">
-        <div class="text-caption text-grey-6 q-mb-md">뒷면</div>
-        <div v-if="!toggleUpdateBackField" @click="onClickBack">{{ card.back }}</div>
-        <q-input v-if="toggleUpdateBackField" v-model="backField" type="textarea" @blur="onBlurBackField"/>
+        <div class="text-caption text-grey-6 q-mb-md">정답</div>
+        <div v-if="!toggleUpdateBackField" @click="onClickBack">{{ card.answer }}</div>
+        <q-input v-if="toggleUpdateBackField" v-model="answerField" type="textarea" @blur="onBlurBackField"/>
       </q-card>
     </q-card-section>
   </q-card>
@@ -50,28 +49,28 @@ const onDeleteCardButtonClick = async (id: number) => {
 };
 
 const toggleUpdateFrontField = ref(false);
-const frontField = ref<string | undefined>();
+const questionField = ref<string | undefined>();
 const toggleUpdateBackField = ref(false);
-const backField = ref<string | undefined>();
+const answerField = ref<string | undefined>();
 
 const onClickFront = () => {
-  frontField.value = card.question;
+  questionField.value = card.question;
   toggleUpdateFrontField.value = true;
 };
 
 const onBlurFrontField = async () => {
   toggleUpdateFrontField.value = false;
-  await cardStore.update(card.id, { front: frontField.value });
+  await cardStore.update(card.id, { question: questionField.value });
 };
 
 const onClickBack = () => {
-  backField.value = card.answer;
+  answerField.value = card.answer;
   toggleUpdateBackField.value = true;
 };
 
 const onBlurBackField = async () => {
   toggleUpdateBackField.value = false;
-  await cardStore.update(card.id, { back: backField.value });
+  await cardStore.update(card.id, { answer: answerField.value });
 };
 
 </script>

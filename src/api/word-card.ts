@@ -23,7 +23,7 @@ export class WordCardApi {
     return data;
   }
 
-  static async updateCard(id: number, request: { front?: string, back?: string }): Promise<WordCard> {
+  static async updateCard(id: number, request: { question?: string, answer?: string}): Promise<WordCard> {
     const {data} = await api.patch(`/api/word-cards/${id}`, request);
     return data;
   }

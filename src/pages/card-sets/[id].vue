@@ -10,8 +10,16 @@
             </div>
             <div class="col-6 flex justify-end items-center q-gutter-md">
 <!--              <q-select v-model="selectedStudyTarget" @update:model-value="onStudyTargetSelected" outlined label="암기 레벨" :options="studyTargetOptions" stack-label style="width: 200px;"/>-->
-              <q-select outlined label="암기 레벨" :options="studyTargetOptions" stack-label style="width: 200px;"/>
-              <q-btn label="공부 시작" color="primary" size="lg" to="/study" :disable="disableStudyButton"/>
+              <q-select outlined
+                        label="암기 레벨"
+                        :options="studyTargetOptions"
+                        stack-label
+                        style="width: 200px;"/>
+              <q-btn label="공부 시작"
+                     color="primary"
+                     size="lg"
+                     to="/study"
+                     :disable="disableStudyButton"/>
             </div>
           </div>
 
@@ -23,7 +31,7 @@
             </div>
             <div class="col-8 flex justify-end">
 <!--              <MemorizationSummary v-bind="memorizationLevelSummary" :activatedItem="selectedStudyTarget.value"/>-->
-              <MemorizationSummary/>
+              <MemorizationSummary v-bind="summary"/>
             </div>
           </div>
         </div>
@@ -53,11 +61,14 @@ import WordCardPage from "components/app/card-sets/word-type/WordCardPage.vue";
 import ChoiceCardPage from "components/app/card-sets/choid-type/ChoiceCardPage.vue";
 import {WordCard} from "src/types/word-card";
 import {MemorizationLevel} from "src/types/card";
+import {useWordCardStore} from "stores/word-card-store";
+import {ChoiceCard} from "src/types/choice-card";
 
 
-let cardSetStore = useCardSetStore();
-let route = useRoute();
-let router = useRouter();
+const cardSetStore = useCardSetStore();
+const wordCardStore = useWordCardStore();
+const route = useRoute();
+const router = useRouter();
 
 const cardSet = ref<CardSet | undefined>();
 
@@ -86,27 +97,13 @@ onMounted(async () => {
   }
 });
 
-// const memorizationLevelSummary = computed(() => {
-//   const cards: WordCard[] = useWordCardStore.cards;
-//   // const summary: { [key: MemorizationLevelKey]: number } = {
-//   const summary = {
-//     ToStudy: 0,
-//     Difficult: 0,
-//     SomewhatDifficult: 0,
-//     Understand: 0,
-//     Easy: 0,
-//     VeryEasy: 0,
-//     Perfect: 0,
-//   };
-//   cards.forEach(card => {
-//     summary[card.memorizationLevel] += 1;
-//   });
-//
-//   summary.ToStudy = cardStore.toStudyCards.length;
-//   return summary;
-// });
-
-
+const summary = computed(() => {
+  if (cardSet.value?.type === CardSetType.WORD) {
+    return wordCardStore.summary;
+  } else {
+    return {}
+  }
+});
 
 
 const studyTargetOptions = [{ label: '공부할 카드', value: 'ToStudy' }, ...Object.values(MemorizationLevel)];
@@ -114,7 +111,6 @@ const disableStudyButton = computed(() => {
   return studyCardStore.isEmpty();
 });
 const studyCardStore = useStudyCardStore();
-
 
 </script>
 

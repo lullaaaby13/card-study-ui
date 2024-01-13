@@ -4,29 +4,29 @@
       <q-card-section class="row">
         <div class="col-6 q-pr-sm">
           <q-input
-            id="front"
-            ref="frontField"
+            id="question"
+            ref="questionField"
             v-model="question"
             type="textarea"
             outlined
             stack-label
-            label="앞면"
+            label="질문"
             lazy-rules
-            :rules="[val => !!val || '앞면 내용을 입력해주세요.']"
+            :rules="[val => !!val || '질문 내용을 입력해 주세요.']"
             @keydown="handleKeyDown"
           />
         </div>
         <div class="col-6 q-pl-sm">
           <q-input
-            id="back"
-            ref="backField"
+            id="answer"
+            ref="answerField"
             v-model="answer"
             type="textarea"
             outlined
             stack-label
-            label="뒷면"
+            label="정답"
             lazy-rules
-            :rules="[val => !!val || '뒷면 내용을 입력해주세요.']"
+            :rules="[val => !!val || '정답 내용을 입력해 주세요.']"
             @keydown="handleKeyDown"
           />
         </div>
@@ -58,9 +58,9 @@ const props = defineProps({
   },
 });
 
-const frontField = ref(null);
-const backField = ref(null);
-const referenceField = ref(null);
+const questionField = ref(null);
+const answerField = ref(null);
+
 
 const question = ref<string>('');
 const answer = ref<string>('');
@@ -76,10 +76,8 @@ const onSubmit = async () => {
   question.value = '';
   answer.value = '';
   // @ts-ignore
-  frontField.value?.focus();
+  questionField.value?.focus();
 };
-
-
 
 const handleKeyDown = (event: KeyboardEvent) => {
   const keyCode = event.keyCode;
@@ -89,11 +87,11 @@ const handleKeyDown = (event: KeyboardEvent) => {
     // // @ts-ignore
     // console.log(frontField.value?.focus)
     // @ts-ignore
-    frontField.value?.focus();
+    questionField.value?.focus();
   }
   if (event.ctrlKey && keyCode === 50) {
     // @ts-ignore
-    backField.value?.focus();
+    answerField.value?.focus();
   }
   if (event.ctrlKey && keyCode === 51) {
     // @ts-ignore

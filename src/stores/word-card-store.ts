@@ -3,6 +3,7 @@ import {computed, ref} from "vue";
 import {CreateWordCardRequest, WordCard} from "src/types/word-card";
 import {date} from "quasar";
 import {WordCardApi} from "src/api/word-card";
+import {ChoiceCard} from "src/types/choice-card";
 
 export const useWordCardStore = defineStore('wordCardStore', () => {
 
@@ -47,13 +48,33 @@ export const useWordCardStore = defineStore('wordCardStore', () => {
     }
   }
 
-  const update = async (cardId: number, request: { front?: string, back?: string}) => {
+  const update = async (cardId: number, request: { question?: string, answer?: string}) => {
     const card = findById(cardId);
     if (card) {
       let updatedCard = await WordCardApi.updateCard(cardId, request);
       replace(updatedCard);
     }
   }
+
+  const summary = computed(() => {
+
+    const summary = {
+      ToStudy: 0,
+      Difficult: 0,
+      SomewhatDifficult: 0,
+      Understand: 0,
+      Easy: 0,
+      VeryEasy: 0,
+      Perfect: 0,
+    };
+    cards.value.forEach(card => {
+      summary[card.memorizationLevel] += 1;
+    });
+
+    summary.ToStudy = toStudyCards.value.length;
+    console.log(summary);
+    return summary;
+  });
 
   return {
     cards,
@@ -63,5 +84,6 @@ export const useWordCardStore = defineStore('wordCardStore', () => {
     remove,
     toStudyCards,
     update,
+    summary,
   }
 });

@@ -4,7 +4,7 @@
   </div>
 
   <div class="flex items-center q-my-md q-gutter-md">
-    <q-input v-model="searchText" label="검색(앞면)" stack-label style="width: 30vw;"/>
+    <q-input v-model="searchText" label="검색(질문)" stack-label style="width: 30vw;"/>
     <q-select v-model="selectedSearchMemorizationLevel" outlined label="암기 레벨" :options="searchMemorizationLevelOptions" stack-label style="width: 200px;"/>
   </div>
   <div class="row q-my-md q-gutter-md">
@@ -36,6 +36,7 @@ const searchMemorizationLevelOptions = [{ label: '전체', value: 'All' }, ...Ob
 
 /** HOOK **/
 onMounted(async () => {
+  console.log('WordCardPage onMounted')
   // @ts-ignore
   const cardSetId = route.params.id;
   await wordCardStore.fetchAll(cardSetId);
