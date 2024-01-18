@@ -5,25 +5,9 @@
   >
     <q-card-section class="flex justify-between">
       <span class="text-caption text-gre-7">뒷면</span>
-<!--      <q-btn-dropdown flat dropdown-icon="more_vert" color="grey-7">-->
-<!--        <q-list>-->
-<!--          <q-item clickable v-close-popup>-->
-<!--            <q-item-section>-->
-<!--              <q-item-label>수정하기</q-item-label>-->
-<!--            </q-item-section>-->
-<!--          </q-item>-->
-<!--          <q-item clickable v-close-popup>-->
-<!--            <q-item-section>-->
-<!--              <q-item-label>삭제하기</q-item-label>-->
-<!--            </q-item-section>-->
-<!--          </q-item>-->
-<!--        </q-list>-->
-<!--      </q-btn-dropdown>-->
     </q-card-section>
 
-    <q-card-section class="text-h6 text-bold text-center q-my-md">
-      {{answer}}
-    </q-card-section>
+    <q-card-section class="text-h6 text-bold text-center q-my-md" v-html="convertNewLineToBR(answer)"/>
 
     <q-card-actions class="flex justify-center">
       <q-btn label="몰라요(q)" color="grey" class="q-mr-md" @click="onDontKnowClick"/>
@@ -36,9 +20,10 @@
 
 import {useStudyCardStore} from "stores/study-card-store";
 import {WordCard} from "src/types/word-card";
-import StudyApi, {AddStudyResult} from "src/api/study";
+import StudyApi from "src/api/study";
 import {onMounted, ref} from "vue";
 import {CardSet} from "src/types/card-set";
+import {convertNewLineToBR} from "src/utils";
 
 const studyCardStore = useStudyCardStore();
 

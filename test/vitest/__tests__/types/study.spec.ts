@@ -5,8 +5,8 @@ import {Bucket} from "src/types/study";
 const cards: WordCard[] = [
   {
     id: 1,
-    front: 'Apple',
-    back: '사과',
+    question: 'Apple',
+    answer: '사과',
     memorizationLevel: 'Difficult',
     nextReviewDate: '2023-12-25 00:00:00',
     createdAt: '2023-12-25 00:00:00',
@@ -14,8 +14,8 @@ const cards: WordCard[] = [
   },
   {
     id: 2,
-    front: 'Banana',
-    back: '바나나',
+    question: 'Banana',
+    answer: '바나나',
     memorizationLevel: 'Difficult',
     nextReviewDate: '2023-12-25 00:00:00',
     createdAt: '2023-12-25 00:00:00',
@@ -23,8 +23,8 @@ const cards: WordCard[] = [
   },
   {
     id: 3,
-    front: 'Citron',
-    back: '유자',
+    question: 'Citron',
+    answer: '유자',
     memorizationLevel: 'Difficult',
     nextReviewDate: '2023-12-25 00:00:00',
     createdAt: '2023-12-25 00:00:00',

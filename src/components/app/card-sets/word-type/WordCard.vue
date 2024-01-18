@@ -25,7 +25,7 @@
       </q-card>
       <q-card bordered class="q-pa-sm" flat style="width: 30vw;">
         <div class="text-caption text-grey-6 q-mb-md">정답</div>
-        <div v-if="!toggleUpdateBackField" @click="onClickBack">{{ card.answer }}</div>
+        <div v-if="!toggleUpdateBackField" @click="onClickBack" v-html="convertNewLineToBR(card.answer)"/>
         <q-input v-if="toggleUpdateBackField" v-model="answerField" type="textarea" @blur="onBlurBackField"/>
       </q-card>
     </q-card-section>
@@ -38,6 +38,7 @@ import {date} from "quasar";
 import {WordCard} from "src/types/word-card";
 import {useWordCardStore} from "stores/word-card-store";
 import {ref} from "vue";
+import {convertNewLineToBR} from "src/utils";
 
 let cardStore = useWordCardStore();
 
