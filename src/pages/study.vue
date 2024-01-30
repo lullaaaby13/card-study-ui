@@ -2,7 +2,7 @@
   <q-page padding class="full-height">
     <q-space class="q-my-xl"/>
     <div class="row justify-center">
-      <div class="col-8">
+      <div class="col-8 q-px-md">
         <div class="q-py-xl">
           <div class="row">
             <div class="col-6 flex items-center q-gutter-md">
@@ -35,7 +35,7 @@
           </div>
         </div>
       </div>
-      <div class="col-2 q-gutter-y-md">
+      <div class="col-4 q-gutter-y-md q-px-md">
         <q-list bordered>
           <q-item-label header>바구니에 담긴 카드</q-item-label>
           <template v-for="(card, index) in studyCardStore.bucket.getCards()" :key="index">
@@ -100,7 +100,9 @@ const setCurrentCard = (card: WordCard) => {
 };
 
 const onFinishButtonClick = () => {
-  router.push(`/card-sets/${studyCardStore.cardSet.id}`);
+  if (studyCardStore.cardSet) {
+    router.push(`/card-sets/${studyCardStore.cardSet.id}`);
+  }
 };
 
 </script>

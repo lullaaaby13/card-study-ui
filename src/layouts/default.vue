@@ -1,13 +1,7 @@
 <template>
-  <q-layout view="lHh Lpr lFf" class="bg-grey-2">
+  <q-layout view="lHh Lpr lFf" class="bg-white">
     <q-header elevated class="bg-primary">
-      <q-toolbar class="flex justify-end">
-<!--        <q-btn flat round dense icon="menu" class="q-mr-sm" />-->
-<!--        <q-avatar>-->
-<!--          <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">-->
-<!--        </q-avatar>-->
-<!--        <q-toolbar-title>Quasar Framework</q-toolbar-title>-->
-
+      <q-toolbar class="flex justify-end m-center" style="width: 1200px;">
         <q-btn label="로그인" color="primary" v-if="!authStore.isSignedIn" to="/sign-in"/>
 
         <q-btn-dropdown
@@ -46,8 +40,10 @@
       </q-toolbar>
     </q-header>
 
-    <q-page-container>
-      <router-view />
+    <q-page-container style="background-color: #fdfdfd;">
+      <div class="page-wrapper">
+        <router-view />
+      </div>
     </q-page-container>
 
     <q-dialog v-model="showErrorDialog">
@@ -96,3 +92,11 @@ onErrorCaptured( (err, instance, info) => {
 
 
 </script>
+
+<style lang="scss" scoped>
+
+.page-wrapper {
+  width: 1200px;
+  margin: 0 auto;
+}
+</style>

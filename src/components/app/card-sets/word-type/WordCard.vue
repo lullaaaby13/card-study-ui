@@ -17,13 +17,13 @@
         <q-btn icon="delete" flat color="red" size="md" @click="onDeleteCardButtonClick(card.id)"/>
       </div>
     </div>
-    <q-card-section class="flex justify-around">
-      <q-card bordered class="q-pa-sm" flat style="width: 30vw;">
+    <q-card-section class="row">
+      <q-card bordered class="q-pa-sm col-6" flat>
         <div class="text-caption text-grey-6 q-mb-md">질문</div>
         <div v-if="!toggleUpdateFrontField" @click="onClickFront">{{ card.question }}</div>
         <q-input v-if="toggleUpdateFrontField" v-model="questionField" type="textarea" @blur="onBlurFrontField"/>
       </q-card>
-      <q-card bordered class="q-pa-sm" flat style="width: 30vw;">
+      <q-card bordered class="q-pa-sm col-6" flat>
         <div class="text-caption text-grey-6 q-mb-md">정답</div>
         <div v-if="!toggleUpdateBackField" @click="onClickBack" v-html="convertNewLineToBR(card.answer)"/>
         <q-input v-if="toggleUpdateBackField" v-model="answerField" type="textarea" @blur="onBlurBackField"/>

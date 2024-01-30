@@ -1,16 +1,11 @@
 <template>
   <q-page padding class="full-height">
-
-    <div class="row justify-center">
-      <div class="col-8">
-        <div class="flex justify-end q-my-md q-gutter-x-md">
-          <q-btn label="카드 세트 만들기" color="primary" @click="showCreateCardSetDialog = true" size="lg"/>
-        </div>
-        <div class="row q-gutter-md justify-start">
-          <CardSetCard v-for="cardSet in cardSetStore.cardSets" :key="cardSet.id"
-                       v-bind="cardSet"/>
-        </div>
-      </div>
+    <div class="flex justify-end q-my-md q-gutter-x-md">
+      <q-btn label="카드 세트 만들기" color="primary" @click="showCreateCardSetDialog = true" size="lg"/>
+    </div>
+    <div class="row q-gutter-md justify-start">
+      <CardSetCard v-for="cardSet in cardSetStore.cardSets" :key="cardSet.id"
+                   v-bind="cardSet"/>
     </div>
   </q-page>
 

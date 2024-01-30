@@ -6,35 +6,7 @@ import {CardSet} from "src/types/card-set";
 
 export const useStudyCardStore = defineStore('studyCardStore', () => {
   const cardSet = ref<CardSet>();
-  const cards = ref<WordCard[]>([
-    // {
-    //   id: 1,
-    //   front: 'Apple',
-    //   back: '사과',
-    //   memorizationLevel: 'Difficult',
-    //   nextReviewDate: '2023-12-25 00:00:00',
-    //   createdAt: '2023-12-25 00:00:00',
-    //   updatedAt: '2023-12-25 00:00:00',
-    // },
-    // {
-    //   id: 2,
-    //   front: 'Banana',
-    //   back: '바나나',
-    //   memorizationLevel: 'Difficult',
-    //   nextReviewDate: '2023-12-25 00:00:00',
-    //   createdAt: '2023-12-25 00:00:00',
-    //   updatedAt: '2023-12-25 00:00:00',
-    // },
-    // {
-    //   id: 3,
-    //   front: 'Citron',
-    //   back: '유자',
-    //   memorizationLevel: 'Difficult',
-    //   nextReviewDate: '2023-12-25 00:00:00',
-    //   createdAt: '2023-12-25 00:00:00',
-    //   updatedAt: '2023-12-25 00:00:00',
-    // },
-  ]);
+  const cards = ref<WordCard[]>([]);
   const bucket = ref<Bucket>(new Bucket());
 
   const load = (toStudyCards: WordCard[]) => {

@@ -1,55 +1,50 @@
 <template>
-  <q-page padding class="full-height">
-    <div class="row justify-center" v-if="cardSet">
-      <div class="col-8">
-        <div>
-          <div class="row">
-            <div class="col-6 flex q-gutter-x-xl">
-              <q-btn label="뒤로가기" flat dense color="secondary" to="/"/>
-              <h5>{{ cardSet.name }}</h5>
-            </div>
-            <div class="col-6 flex justify-end items-center q-gutter-md">
-              <q-toggle
-                v-model="isShuffleStudyCards"
-                label="카드 순서 랜덤"
-              />
-            <q-select v-model="selectedStudyTarget"
-                      @update:model-value="onStudyTargetSelected"
-                      outlined
-                      label="암기 레벨"
-                      :options="studyTargetOptions"
-                      stack-label
-                      style="width: 200px;"
-            />
-            <q-btn label="공부 시작"
-                   color="primary"
-                   size="lg"
-                   @click="onStudyStartButtonClick"
-                   :disable="disableStudyButton"/>
-            </div>
-          </div>
+  <q-page padding class="full-height" v-if="cardSet">
+    <div>
+      <div class="row">
+        <div class="col-6 flex q-gutter-x-xl">
+          <q-btn label="뒤로가기" flat dense color="secondary" to="/"/>
+          <h5>{{ cardSet.name }}</h5>
+        </div>
+        <div class="col-6 flex justify-end items-center q-gutter-md">
+          <q-toggle
+            v-model="isShuffleStudyCards"
+            label="카드 순서 랜덤"
+          />
+          <q-select v-model="selectedStudyTarget"
+                    @update:model-value="onStudyTargetSelected"
+                    outlined
+                    label="암기 레벨"
+                    :options="studyTargetOptions"
+                    stack-label
+                    style="width: 200px;"
+          />
+          <q-btn label="공부 시작"
+                 color="primary"
+                 size="lg"
+                 @click="onStudyStartButtonClick"
+                 :disable="disableStudyButton"/>
+        </div>
+      </div>
 
-          <div class="row">
-            <div class="col-4">
-              <div class="text-caption">
-                <span class="text-bold">생성일</span>: {{ cardSet.createdAt }}
-              </div>
-            </div>
-            <div class="col-8 flex justify-end">
-              <MemorizationSummary v-bind="summary" :activatedItem="selectedStudyTarget.value"/>
-            </div>
+      <div class="row">
+        <div class="col-4">
+          <div class="text-caption">
+            <span class="text-bold">생성일</span>: {{ cardSet.createdAt }}
           </div>
         </div>
-
-        <WordCardPage v-if="cardSet.type === CardSetType.WORD"
-                      v-bind="cardSet"
-        />
-        <ChoiceCardPage v-else-if="cardSet.type === CardSetType.CHOICE"
-                        v-bind="cardSet"
-        />
-
+        <div class="col-8 flex justify-end">
+          <MemorizationSummary v-bind="summary" :activatedItem="selectedStudyTarget.value"/>
+        </div>
       </div>
     </div>
+
+    <WordCardPage v-if="cardSet.type === CardSetType.WORD"
+                  v-bind="cardSet"
+    />
+    <ChoiceCardPage v-else-if="cardSet.type === CardSetType.CHOICE"
+                    v-bind="cardSet"
+    />
   </q-page>
 </template>
 
